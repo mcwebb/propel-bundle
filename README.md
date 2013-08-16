@@ -17,5 +17,3 @@ Engine::load()->bundle('Propel')
 	->forceRoot($_SERVER['DOCUMENT_ROOT'] . '/unit/')
 	->init();
 ```
-
-The CSS and JS files for buttons and forms along with their depenencies will then be inserted into the template.
