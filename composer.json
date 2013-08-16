@@ -1,0 +1,24 @@
+{
+    "name": "ditto/propel-bundle",
+    "type": "ditto-bundle",
+    "description": "A Ditto framework bundle for the Propel ORM",
+    "keywords": ["database", "orm"],
+    "homepage": "http://github.com/mcwebb/propel-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthew Webb",
+            "email": "matthewowebb@gmail.com",
+            "role": "Maintainer"
+        }
+    ],
+    "require": {
+        "ditto/ditto": ">=0.3",
+        "propel/propel1": ">=1.6.7"
+    },
+    "autoload": {
+        "psr-0": {
+            "Ditto\\Propel\\": "src"
+        }
+    }
+}
