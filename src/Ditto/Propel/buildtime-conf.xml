@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
   <propel>
-    <datasources default="">
-      <datasource id="">
+    <datasources default="unit">
+      <datasource id="unit">
         <adapter>mysql</adapter> <!-- sqlite, mysql, mssql, oracle, or pgsql -->
         <connection>
-          <dsn>mysql:host=localhost;dbname=</dsn>
-          <user></user>
-          <password></password>
+          <dsn>mysql:host=localhost;dbname=unit</dsn>
+          <user>unit</user>
+          <password>pass#4241</password>
         </connection>
       </datasource>
     </datasources>

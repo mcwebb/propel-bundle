@@ -1,3 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<database name="" namespace="Ditto\Propel\classes" defaultIdMethod="native" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
+<database name="unit" namespace="Ditto\Propel\classes" defaultIdMethod="native" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
+	<table name="user">
+ 		<column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+		<column name="name" type="varchar" size="255" required="true" />
+		<column name="pass" type="varchar" size="255" required="true" defaultValue="7550b672e162c224c309bdea5d48ca975081a904" />
+		<column name="type_id" type="integer" required="true" />
+ 		<foreign-key foreignTable="user_type" phpName="UserType">
+			<reference local="type_id" foreign="id" />
+		</foreign-key>
+		<behavior name="timestampable" />
+	</table>
+	<table name="user_type">
+ 		<column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+		<column name="name" type="varchar" size="255" required="true" />
+		<column name="privileges" type="array" />
+		<behavior name="timestampable" />
+	</table>
+	<table name="change">
+ 		<column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+		<column name="type" type="varchar" size="255" required="true" />
+		<column name="resource_id" type="integer" required="true" />
+		<column name="action" type="varchar" size="255" required="true" />
+		<column name="user_id" type="integer" required="true" />
+ 		<foreign-key foreignTable="user" phpName="User">
+			<reference local="user_id" foreign="id" />
+		</foreign-key>
+ 		<column name="when" type="timestamp" defaultExpr="CURRENT_TIMESTAMP" />
+ 	</table>
+ 	<table name="page">
+ 		<column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+ 		<column name="name" type="varchar" size="255" required="true" />
+ 		<column name="body_english" type="longvarchar" />
+ 		<column name="body_welsh" type="longvarchar" />
+ 		<column name="description" type="varchar" size="510" />
+ 		<column name="keywords" type="array" />
+ 		<column name="status" type="varchar" size="50" required="true" />
+ 		<column name="privilege_id" type="integer" />
+ 		<foreign-key foreignTable="user_type" phpName="Privilege">
+			<reference local="privilege_id" foreign="id" />
+		</foreign-key>
+ 		<behavior name="timestampable" />
+	</table>
+	<table name="section">
+ 		<column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+ 		<column name="name" type="varchar" size="255" required="true" />
+ 		<column name="body" type="longvarchar" required="true" />
+ 		<column name="privilege_id" type="integer" />
+ 		<foreign-key foreignTable="user_type" phpName="Privilege">
+			<reference local="privilege_id" foreign="id" />
+		</foreign-key>
+ 		<behavior name="timestampable" />
+	</table>
+	<table name="menu">
+ 		<column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+ 		<column name="name" type="varchar" size="255" required="true" />
+ 		<column name="type" type="varchar" size="50" />
+ 		<behavior name="timestampable" />
+	</table>
+	<table name="menu_item">
+ 		<column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+ 		<column name="menu_id" type="integer" required="true" />
+ 		<foreign-key foreignTable="menu" phpName="Menu">
+			<reference local="menu_id" foreign="id" />
+		</foreign-key>
+		<column name="name" type="varchar" size="255" required="true" />
+		<column name="submenu_id" type="integer" required="true" />
+ 		<foreign-key foreignTable="menu" phpName="SubMenu">
+			<reference local="submenu_id" foreign="id" />
+		</foreign-key>
+		<column name="type" type="varchar" size="255" required="true" />
+		<column name="action" type="varchar" size="510" />
+		<column name="position" type="integer" />
+		<behavior name="timestampable" />
+	</table>
+	<table name="picture">
+		<column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+		<column name="name" type="varchar" size="255" />
+		<column name="url" type="varchar" size="255" required="true" />
+		<column name="thumb_url" type="varchar" size="255" />
+		<column name="grouping_id" type="integer" />
+		<foreign-key foreignTable="picture_grouping" phpName="Grouping">
+			<reference local="grouping_id" foreign="id" />
+		</foreign-key>
+		<behavior name="timestampable" />
+	</table>
+	<table name="picture_grouping">
+		<column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+		<column name="name" type="varchar" size="255" required="true" />
+		<behavior name="timestampable" />
+	</table>
+	<table name="visit">
+		<column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+		<column name="browser_name" type="varchar" size="255" />
+		<column name="browser_version" type="varchar" size="255" />
+		<column name="platform" type="varchar" size="255" />
+		<column name="country" type="varchar" size="255" />
+		<behavior name="timestampable" />
+	</table>
+	<table name="hit">
+		<column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+		<column name="uri_id" type="integer" />
+		<foreign-key foreignTable="hit_uri" phpName="Uri">
+			<reference local="uri_id" foreign="id" />
+		</foreign-key>
+		<column name="visit_id" type="integer" />
+		<foreign-key foreignTable="visit" phpName="Visit">
+			<reference local="visit_id" foreign="id" />
+		</foreign-key>
+		<behavior name="timestampable" />
+	</table>
+	<table name="hit_uri">
+		<column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+		<column name="uri" type="varchar" size="255" />
+		<behavior name="timestampable" />
+	</table>
 </database>
